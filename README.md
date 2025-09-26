@@ -59,7 +59,6 @@ flowchart LR
 
 Replication path: on local write, DC packages (key, version, dependencies) and ships it to peers; receivers delay commit until dependencies satisfied. Artificial sleeps create different inter-DC latencies to demonstrate reordering. 
 
-serverAndPeer
 
 <br>
 📦 quickstart
