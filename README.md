@@ -4,7 +4,7 @@ A tiny distributed datastore with causal consistency (Lamport clocks) for CMPSC 
 a teaching-scale system that runs 3 “data centers,” accepts concurrent client reads/writes, and replicates with causal ordering using Lamport clocks + dependency tracking. built with bare-bones sockets & threads to make all the distributed-systems ideas visible.
 
 <br>
-✨ highlights
+Highlights
 
 Causal Consistency: tracks and enforces “happens-before” using Lamport clocks and a per-key dependency map.
 
@@ -20,7 +20,7 @@ Design/behavior summarized from my lab write-up and the source code in this repo
 
 
 <br>
-🧠 concept map
+Concept map
 
 Goal: accept client operations at any data center, propagate writes, and only commit a replicated write once its dependencies (observed earlier writes) are satisfied.
 
@@ -34,7 +34,7 @@ this shows causal consistency: if y happened before z, then every DC will wait t
 
 
 <br>
-🧩 architecture (3 DCs + clients)
+Architecture (3 DCs + clients)
 flowchart LR
   subgraph Client Terminals
     C0[Client → DC0]
@@ -61,7 +61,7 @@ Replication path: on local write, DC packages (key, version, dependencies) and s
 
 
 <br>
-📦 quickstart
+Quickstart
 
 requirements: Python 3.9+ (no external libs)
 
@@ -84,7 +84,7 @@ Each local write responds immediately; replica commits may appear later dependin
 You’ll see logs like “Write z delayed … until dependency y arrives,” then “committed”—that’s causal ordering in action. 
 
 <br>
-🗂️ code tour
+Code tour
 
 serverAndPeer.py — everything lives here:
 
@@ -103,7 +103,7 @@ client_behavior(): tiny TCP client for read/write commands
 
 
 <br>
-🧪 what to observe
+What to observe
 
 Reordering: with asymmetric delays (e.g., DC0→DC2 slower than DC1→DC2), you’ll see different arrival orders.
 
@@ -114,7 +114,7 @@ Monotonic reads (per-client session): once you’ve seen a version for a key at 
 (These match the lab’s intended behavior and sample traces.) 
 
 <br>
-📉 current limitations (by design for the lab)
+Current limitations (by design for the lab)
 
 No write-write conflict resolution (e.g., LWW/CRDTs not implemented).
 
@@ -127,7 +127,7 @@ Security: plaintext sockets; not intended for untrusted networks.
 
 
 <br>
-🛣️ roadmap (nice next steps if you want to extend it)
+Roadmap (nice next steps if you want to extend it)
 
  Pluggable topologies & N nodes via a config file / CLI.
 
@@ -144,7 +144,7 @@ Security: plaintext sockets; not intended for untrusted networks.
  Optional observability: Prometheus counters and a Grafana dashboard.
 
 <br>
-🧪 sample commands to reproduce the classic demo
+Sample commands to reproduce the classic demo
 
 replicate the write ordering + dependency wait seen in the lab handout:
 
@@ -167,7 +167,7 @@ With the provided artificial delays, DC2 will see arrivals like x, z, y, then de
 
 
 <br>
-🧾 message formats
+Message formats
 
 Client → DC (local):
 
@@ -182,12 +182,12 @@ replicate-<key>-<version>-<dependencies>
 where <version> is a tuple like (lamport, dcId) and <dependencies> is a dict {key: version}. 
 
 <br>
-📝 license
+License
 
 MIT — do whatever, just keep the notice.
 
 <br>
-🙌 credits
+Credits
 
 design + implementation: Kartik Ugemuge
 
