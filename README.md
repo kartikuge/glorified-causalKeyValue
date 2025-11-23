@@ -1,5 +1,5 @@
 # glorified-causalKeyValue
-A tiny distributed datastore with causal consistency (Lamport clocks) for CMPSC 497: Distributed Systems
+A distributed datastore with causal consistency (Lamport clocks) for CMPSC 497: Distributed Systems
 
 a teaching-scale system that runs 3 “data centers,” accepts concurrent client reads/writes, and replicates with causal ordering using Lamport clocks + dependency tracking. built with bare-bones sockets & threads to make all the distributed-systems ideas visible.
 
